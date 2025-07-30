@@ -1,55 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
-    <meta charset="utf-8">
-    <title>家庭簽到系統</title>
+  <meta charset="UTF-8">
+  <title>家庭簽到頁面</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    #signInList li { margin: 5px 0; }
+  </style>
 </head>
 <body>
-    <h1>🏠 家庭每日簽到</h1>
+  <h2>家庭每日簽到</h2>
+  <input type="text" id="nameInput" placeholder="請輸入名字">
+  <button onclick="signIn()">簽到</button>
 
-    <p>📅 今日日期：<span id="today"></span></p>
+  <ul id="signInList"></ul>
 
-    <label>👤 請輸入名字：</label>
-    <input type="text" id="nameInput">
-    <button onclick="signIn()">簽到</button>
+  <script>
+    // 讀取 localStorage 內的資料
+    const savedList = JSON.parse(localStorage.getItem("signIns")) || [];
+    const list = document.getElementById("signInList");
 
-    <h2>📋 已簽到名單：</h2>
-    <ul id="signInList">
-        <!-- 簽到的人會出現在這裡 -->
-    </ul>
+    // 顯示現有的資料
+    savedList.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      list.appendChild(li);
+    });
 
-    <script>
-        // 顯示今天日期
-        const todaySpan = document.getElementById("today");
-        const today = new Date();
-        todaySpan.textContent = today.toLocaleDateString();
+    function signIn() {
+      const nameInput = document.getElementById("nameInput");
+      const name = nameInput.value.trim();
+      if (name === "") return;
 
-        // 儲存簽到名單
-        const signedNames = [];
+      // 產生格式化的日期時間：民國年月日 + 時分
+      const now = new Date();
+      const year = now.getFullYear() - 1911;
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hour = String(now.getHours()).padStart(2, '0');
+      const minute = String(now.getMinutes()).padStart(2, '0');
+      const timestamp = `${year}.${month}.${day} ${hour}:${minute}`;
 
-        function signIn() {
-            const nameInput = document.getElementById("nameInput");
-            const name = nameInput.value.trim();
+      const signText = `${name} - ${timestamp}`;
 
-            if (name === "") {
-                alert("請輸入名字！");
-                return;
-            }
+      // 顯示到畫面上
+      const newItem = document.createElement("li");
+      newItem.textContent = signText;
+      list.appendChild(newItem);
 
-            if (signedNames.includes(name)) {
-                alert(name + " 今天已經簽到過囉！");
-                return;
-            }
+      // 儲存到 localStorage
+      savedList.push(signText);
+      localStorage.setItem("signIns", JSON.stringify(savedList));
 
-            signedNames.push(name);
-
-            const list = document.getElementById("signInList");
-            const newItem = document.createElement("li");
-            newItem.textContent = name;
-            list.appendChild(newItem);
-
-            nameInput.value = "";
-        }
-    </script>
+      // 清空輸入框
+      nameInput.value = "";
+    }
+  </script>
 </body>
 </html>
