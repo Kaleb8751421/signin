@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>家庭簽到系統</title>
+</head>
+<body>
+    <h1>🏠 家庭每日簽到</h1>
+
+    <p>📅 今日日期：<span id="today"></span></p>
+
+    <label>👤 請輸入名字：</label>
+    <input type="text" id="nameInput">
+    <button onclick="signIn()">簽到</button>
+
+    <h2>📋 已簽到名單：</h2>
+    <ul id="signInList">
+        <!-- 簽到的人會出現在這裡 -->
+    </ul>
+
+    <script>
+        // 顯示今天日期
+        const todaySpan = document.getElementById("today");
+        const today = new Date();
+        todaySpan.textContent = today.toLocaleDateString();
+
+        // 儲存簽到名單
+        const signedNames = [];
+
+        function signIn() {
+            const nameInput = document.getElementById("nameInput");
+            const name = nameInput.value.trim();
+
+            if (name === "") {
+                alert("請輸入名字！");
+                return;
+            }
+
+            if (signedNames.includes(name)) {
+                alert(name + " 今天已經簽到過囉！");
+                return;
+            }
+
+            signedNames.push(name);
+
+            const list = document.getElementById("signInList");
+            const newItem = document.createElement("li");
+            newItem.textContent = name;
+            list.appendChild(newItem);
+
+            nameInput.value = "";
+        }
+    </script>
+</body>
+</html>
