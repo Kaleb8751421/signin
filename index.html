@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>俏皮家族 - 登入</title>
+  <style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center; /* 水平置中 */
+    align-items: center;     /* 垂直置中 */
+    height: 100vh;           /* 讓畫面填滿整個高度 */
+    background-color: #f0f2f5;
+  }
+
+  .container {
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  input, textarea, button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  li {
+    background-color: #eee;
+    margin-top: 5px;
+    padding: 8px;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+    <div class = "container">
+    <h1>🏡俏皮家族網站</h1>
+  <h2>登入</h2>
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="密碼">
+  <br>
+  <button onclick="signIn()">登入</button>
+  <button onclick="signUp()">註冊</button>
+  
+  </div>
+
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
